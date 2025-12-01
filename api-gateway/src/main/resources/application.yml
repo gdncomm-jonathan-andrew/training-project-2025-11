@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  datasource:
+    url: 'jdbc:mysql://localhost:3306/jwt'
+    username: root
+    password: null
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  cloud:
+    gateway:
+      routes:
+        - id: get-cart
+          uri: 'http://localhost:8081/cart'
+          predicates:
+            - Path=/example/**
+      default-filters:
+        - >-
+          DedupeResponseHeader=Access-Control-Allow-Credentials
+          Access-Control-Allow-Origin
+jwt:
+  secret: my-secret-key
